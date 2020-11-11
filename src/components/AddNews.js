@@ -1,12 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
+import { Redirect } from "react-router-dom";
+import Modal from "react-modal";
 
-const AddNews = () => {
+const AddNews = (props) => {
   const [article, setArticle] = useState({
     title: "",
-    text: "",
-    data: "",
+    content: "",
+    time: new Date().toString().slice(0, 24),
   });
+
+  const [news, setNews] = useState(props.news);
+  console.log(news, props.news);
 
   const handleChange = (e) => {
     setArticle({
@@ -15,8 +20,13 @@ const AddNews = () => {
     });
   };
 
-  console.log(article);
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setNews(article);
+    props.add(article);
+  };
 
+  if (news.length != props.news.length) return <Redirect to="/news" />;
   return (
     <div>
       <form className="ui form">
@@ -32,7 +42,7 @@ const AddNews = () => {
         <div className="field">
           <label>Text</label>
           <textarea
-            name="text"
+            name="content"
             placeholder="Add your text here"
             cols="30"
             rows="10"
@@ -45,19 +55,27 @@ const AddNews = () => {
             <label>I agree to the Terms and Conditions</label>
           </div>
         </div>
-        <button className="ui button" type="submit">
+
+        <button className="ui button" type="submit" onClick={handleSubmit}>
           Submit
         </button>
       </form>
     </div>
   );
 };
+
+const mapStateToProps = (state) => {
+  return {
+    news: state.news.articles,
+  };
+};
+
 const mapDispatchToProps = (dispatch) => {
   return {
-    add: (news) => {
-      dispatch({ type: "ADD", news });
+    add: (article) => {
+      dispatch({ type: "ADD", article });
     },
   };
 };
 
-export default connect(mapDispatchToProps)(AddNews);
+export default connect(mapStateToProps, mapDispatchToProps)(AddNews);

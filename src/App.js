@@ -1,11 +1,13 @@
+import { useState } from "react";
 import "./App.css";
 import { BrowserRouter, Switch, Route } from "react-router-dom";
 import Home from "./components/Home";
 import News from "./components/News";
 import AddNews from "./components/AddNews";
-import Login from "./Login";
+import Login from "./components/Login";
 
 const App = () => {
+  const [show, setShow] = useState(false);
   return (
     <BrowserRouter>
       <div className="App">
@@ -17,13 +19,18 @@ const App = () => {
             <li>
               <a href="/news">Новости</a>
             </li>
-            <li>
-              <a href="/login">Вход/Выход</a>
+            <li
+              onClick={(e) => {
+                e.preventDefault();
+                setShow(true);
+              }}
+            >
+              <a href="">Вход/Выход</a>
             </li>
           </ul>
         </nav>
         <div className="main">
-          {/* <Login /> */}
+          <Login show={show} />
           <Switch>
             <Route exact path="/" component={Home} />
             <Route path="/news" component={News} />
