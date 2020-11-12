@@ -1,20 +1,15 @@
 import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
-import { login } from "../store/actions/usersActions";
-import { Redirect } from "react-router-dom";
 import Modal from "react-modal";
+import { login } from "../store/actions/usersActions";
 
 const Login = (props) => {
   const [currentUser, setCurrentUser] = useState({
-    login: "",
+    id: "",
     password: "",
   });
 
-  const [show, setShow] = useState(false);
-
-  useEffect(() => {
-    setShow(props.show);
-  }, [props.show]);
+  const [close, setClose] = useState(false);
 
   const handleChange = (e) => {
     setCurrentUser({
@@ -24,22 +19,19 @@ const Login = (props) => {
   };
 
   const handleClick = (e) => {
-    e.preventDefault();
-    console.log("clicked");
-    setShow(false);
+    setClose(true);
     props.login(currentUser);
   };
 
-  if (props.currentUser) return <Redirect to="/" />;
   return (
-    <Modal isOpen={show} onRequestClose={() => setShow(false)}>
+    <Modal isOpen={props.show && !close} ariaHideApp={false}>
       <div>
         <form className="ui form">
           <div className="field">
             <label>Login</label>
             <input
               type="email"
-              name="login"
+              name="id"
               placeholder="login"
               onChange={handleChange}
             />
@@ -64,15 +56,13 @@ const Login = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  return {
-    currentUser: state.users.currentUser,
-  };
+  console.log(state);
 };
 
 const mapDispatchToProps = (dispatch) => {
   return {
     login: (user) => {
-      dispatch(login(user));
+      dispatch(login(user.id, user.password));
     },
   };
 };

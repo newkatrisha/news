@@ -1,20 +1,26 @@
-export const login = (user) => {
+export const login = (id, password) => {
   return (dispatch, getState) => {
-    if (user.login === "Andrey" && user.password === "test456") {
+    const users = getState().users.users;
+    const user = users.find(
+      (user) => user.id === id && user.password === password
+    );
+    if (user) {
       dispatch({
-        type: "USER_LOGIN",
-        user,
-      });
-    } else if (user.login === "Katya" && user.password === "test123") {
-      dispatch({
-        type: "ADMIN_LOGIN",
-        user,
+        type: "LOGIN",
+        payload: user,
       });
     } else {
       dispatch({
         type: "LOGIN_ERROR",
-        user,
       });
     }
+  };
+};
+
+export const logOut = () => {
+  return (dispatch) => {
+    dispatch({
+      type: "LOGOUT",
+    });
   };
 };

@@ -1,11 +1,11 @@
 import React, { useState } from "react";
-import axios from "axios";
 import { connect } from "react-redux";
 import "./News.css";
+import SearchPanel from "./SearchPanel";
+import AddNews from "./AddNews";
 
 const News = (props) => {
-  const [isOpened, setIsOpened] = useState(false);
-
+  const [opened, setOpened] = useState(false);
   const newsList = props.news.length ? (
     <div className="ui cards">
       {props.news.map((post) => {
@@ -32,29 +32,35 @@ const News = (props) => {
     <div>There are no news</div>
   );
 
+  const handleAddClick = (e) => {
+    e.preventDefault();
+    setOpened(true);
+  };
+
   const addButton =
-    props.currentUser && props.currentUser === props.user ? (
-      <button className="ui centered button" onClick={() => setIsOpened(true)}>
+    props.currentUser && props.currentUser.role === "user" ? (
+      <button className="ui centered button" onClick={handleAddClick}>
         <a href="/add">Add news</a>
       </button>
     ) : null;
 
   return (
     <div className="ui container center">
+      <div className="ui center  aligned header">
+        <SearchPanel />
+      </div>
       {newsList}
       <div id="button" className="ui two column centered grid">
         {addButton}
       </div>
+      <AddNews show={opened} />
     </div>
   );
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     currentUser: state.users.currentUser,
-    admin: state.users.admin,
-    user: state.users.user,
     news: state.news.articles,
   };
 };

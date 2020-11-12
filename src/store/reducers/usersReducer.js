@@ -1,29 +1,37 @@
 const initState = {
-  admin: {
-    login: "Katya",
-    password: "test123",
-  },
-  user: {
-    login: "Andrey",
-    password: "test456",
-  },
+  users: [
+    {
+      id: "Katya",
+      password: "test123",
+      role: "admin",
+    },
+    {
+      id: "Andrey",
+      password: "test456",
+      role: "user",
+    },
+  ],
   currentUser: null,
 };
 
 const usersReducer = (state = initState, action) => {
+  console.log(action);
   switch (action.type) {
-    case "USER_LOGIN":
+    case "LOGIN":
       return {
         ...state,
-        currentUser: state.user,
+        isError: false,
+        currentUser: state.users.find((user) => user.id === action.payload.id),
       };
-    case "ADMIN_LOGIN":
-      return {
-        ...state,
-        currentUser: state.admin,
-      };
+
     case "LOGIN_ERROR":
       console.log("login error");
+
+    case "LOGOUT":
+      return {
+        ...state,
+        currentUser: null,
+      };
 
     default:
       return state;

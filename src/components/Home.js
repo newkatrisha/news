@@ -1,13 +1,12 @@
-import React from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import "./Home.css";
 import News from "../components/News";
 
 const Home = (props) => {
-  console.log(props.currentUser);
   return props.currentUser ? (
     <div>
-      <h1>Привет, {props.currentUser.login}!</h1>
+      <h1>Привет, {props.currentUser.id}!</h1>
       <News />
     </div>
   ) : (
@@ -21,7 +20,6 @@ const mapStateToProps = (state) => {
   console.log(state);
   return {
     currentUser: state.users.currentUser,
-    auth: state.users.isAuthenticated,
   };
 };
 
