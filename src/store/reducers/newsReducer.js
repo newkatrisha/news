@@ -31,7 +31,6 @@ const initState = {
 };
 
 const newsReducer = (state = initState, action) => {
-  console.log(action);
   switch (action.type) {
     case "ADD_ARTICLE":
       return {

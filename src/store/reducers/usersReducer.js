@@ -15,7 +15,6 @@ const initState = {
 };
 
 const usersReducer = (state = initState, action) => {
-  console.log(action);
   switch (action.type) {
     case "LOGIN":
       return {
@@ -25,12 +24,21 @@ const usersReducer = (state = initState, action) => {
       };
 
     case "LOGIN_ERROR":
-      console.log("login error");
+      return {
+        ...state,
+        isError: true,
+      };
 
     case "LOGOUT":
       return {
         ...state,
         currentUser: null,
+      };
+
+    case "SET_ERROR_TO_FALSE":
+      return {
+        ...state,
+        isError: false,
       };
 
     default:

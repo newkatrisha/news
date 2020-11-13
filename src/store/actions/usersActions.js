@@ -24,3 +24,11 @@ export const logOut = () => {
     });
   };
 };
+
+export const setErrorToFalse = () => {
+  return (dispatch) => {
+    dispatch({
+      type: "SET_ERROR_TO_FALSE",
+    });
+  };
+};
