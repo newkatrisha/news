@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import "./News.css";
+import "./styles/News.css";
 import SearchPanel from "./SearchPanel";
 import { Link } from "react-router-dom";
 import { remove, approve } from "../store/actions/newsActions";

@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import "./Home.css";
+import "./styles/Home.css";
 
 const Home = (props) => {
   return props.currentUser ? (

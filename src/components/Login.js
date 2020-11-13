@@ -2,9 +2,11 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import { login, setErrorToFalse } from "../store/actions/usersActions";
-import { Redirect } from "react-router-dom";
+import { Redirect, useHistory } from "react-router-dom";
+import { loginForm } from "./styles/elements";
 
 const Login = (props) => {
+  let history = useHistory();
   const [currentUser, setCurrentUser] = useState({
     id: "",
     password: "",
@@ -39,38 +41,15 @@ const Login = (props) => {
       onRequestClose={() => {
         props.setErrorToFalse();
         setOpen(false);
+        history.push("/");
       }}
     >
-      <form className="ui form">
-        <div className="field">
-          <label>Login</label>
-          <input
-            type="text"
-            name="id"
-            placeholder="login"
-            onChange={handleChange}
-          />
+      {loginForm(handleChange, handleClick)}
+      {props.error ? (
+        <div className="ui negative floating message">
+          <h4>Login Error</h4>
         </div>
-        <div className="field">
-          <label>Password</label>
-          <input
-            type="password"
-            name="password"
-            placeholder="password"
-            onChange={handleChange}
-          />
-        </div>
-
-        {props.error ? (
-          <div className="ui negative floating message">
-            <h4>Login Error</h4>
-          </div>
-        ) : null}
-
-        <button className="ui button" type="button" onClick={handleClick}>
-          Login
-        </button>
-      </form>
+      ) : null}
     </Modal>
   );
 };

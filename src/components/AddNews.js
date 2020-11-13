@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { connect } from "react-redux";
-import { Redirect } from "react-router-dom";
 import { add } from "../store/actions/newsActions";
+import { addNews } from "./styles/elements";
+import { useHistory } from "react-router-dom";
 
 const AddNews = (props) => {
+  let history = useHistory();
   const [article, setArticle] = useState({
     title: "",
     content: "",
     time: new Date().toString().slice(0, 24),
   });
-
-  const [news, setNews] = useState(props.news);
 
   const handleChange = (e) => {
     setArticle({
@@ -19,49 +19,12 @@ const AddNews = (props) => {
     });
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setNews(article);
+  const handleSubmit = () => {
     props.add(article);
-    return <Redirect to="/news" />;
+    history.push("/news");
   };
 
-  if (news.length !== props.news.length) return <Redirect to="/news" />;
-  return (
-    <div>
-      <form className="ui form">
-        <div className="field">
-          <label>Title</label>
-          <input
-            type="text"
-            name="title"
-            placeholder="Title"
-            onChange={handleChange}
-          />
-        </div>
-        <div className="field">
-          <label>Text</label>
-          <textarea
-            name="content"
-            placeholder="Add your text here"
-            cols="30"
-            rows="10"
-            onChange={handleChange}
-          ></textarea>
-        </div>
-        <div className="field">
-          <div className="ui checkbox">
-            <input type="checkbox" tabindex="0" class="hidden" />
-            <label>I agree to the Terms and Conditions</label>
-          </div>
-        </div>
-
-        <button className="ui button" type="submit" onClick={handleSubmit}>
-          Submit
-        </button>
-      </form>
-    </div>
-  );
+  return <div>{addNews(handleChange, handleSubmit)}</div>;
 };
 
 const mapStateToProps = (state) => {
