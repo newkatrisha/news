@@ -1,17 +1,15 @@
 import React from "react";
 import { connect } from "react-redux";
-import { Link, useHistory } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
-  let history = useHistory();
   const links = props.currentUser ? (
     <li
       onClick={() => {
         props.logOut();
-        history.push("/");
       }}
     >
-      Выход
+      <Link to="/">Выход</Link>
     </li>
   ) : (
     <li>
