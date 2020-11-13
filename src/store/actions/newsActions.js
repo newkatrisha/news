@@ -35,3 +35,20 @@ export const approve = (article) => {
     });
   };
 };
+
+export const updateFilteredArticles = (result) => {
+  return (dispatch) => {
+    dispatch({
+      type: "UPDATE_FILTERED_ARTICLES",
+      payload: result,
+    });
+  };
+};
+
+export const cleanFilteredArticles = () => {
+  return (dispatch) => {
+    dispatch({
+      type: "CLEAN_FILTERED_ARTICLES",
+    });
+  };
+};

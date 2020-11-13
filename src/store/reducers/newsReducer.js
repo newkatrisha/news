@@ -28,6 +28,7 @@ const initState = {
       approved: true,
     },
   ],
+  filteredArticles: [],
 };
 
 const newsReducer = (state = initState, action) => {
@@ -49,6 +50,21 @@ const newsReducer = (state = initState, action) => {
       };
       return {
         ...state,
+      };
+    case "UPDATE_FILTERED_ARTICLES":
+      let new_filtered_array = action.payload;
+      if (!Array.isArray(new_filtered_array)) {
+        new_filtered_array = [new_filtered_array];
+      }
+
+      return {
+        ...state,
+        filteredArticles: new_filtered_array,
+      };
+    case "CLEAN_FILTERED_ARTICLES":
+      return {
+        ...state,
+        filteredArticles: [],
       };
     default:
       return state;

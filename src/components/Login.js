@@ -76,7 +76,6 @@ const Login = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     currentUser: state.users.currentUser,
     error: state.users.isError,

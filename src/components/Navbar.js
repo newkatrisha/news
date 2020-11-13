@@ -17,7 +17,9 @@ const Navbar = (props) => {
           <Link to="/">Главная</Link>
         </li>
         <li>
-          <Link to="/news">Новости</Link>
+          <Link to="/news" onClick={props.cleanFilteredArticles}>
+            Новости
+          </Link>
         </li>
         {links}
       </ul>
@@ -37,6 +39,9 @@ const mapDispatchToProps = (dispatch) => {
       dispatch({
         type: "LOGOUT",
       });
+    },
+    cleanFilteredArticles: () => {
+      dispatch({ type: "CLEAN_FILTERED_ARTICLES" });
     },
   };
 };

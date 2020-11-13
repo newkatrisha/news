@@ -4,11 +4,14 @@ import "./News.css";
 import SearchPanel from "./SearchPanel";
 import { Link } from "react-router-dom";
 import { remove, approve } from "../store/actions/newsActions";
+import { getNewsList } from "../utils/utils";
 
 const News = (props) => {
-  const guestNews = props.news.filter((art) => art.approved);
+  let news = null;
 
-  const news = props.currentUser ? props.news : guestNews;
+  props.filteredArticles.length > 0
+    ? (news = props.filteredArticles)
+    : (news = getNewsList(props.currentUser, props.news));
 
   const newsList = news ? (
     <div className="ui cards">
@@ -80,6 +83,7 @@ const mapStateToProps = (state) => {
   return {
     currentUser: state.users.currentUser,
     news: state.news.articles,
+    filteredArticles: state.news.filteredArticles,
   };
 };
 

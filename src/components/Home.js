@@ -15,7 +15,6 @@ const Home = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
   return {
     currentUser: state.users.currentUser,
   };
