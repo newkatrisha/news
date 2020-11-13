@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import News from "./components/News";
 import AddNews from "./components/AddNews";
 import Navbar from "./components/Navbar";
+import Login from "./components/Login";
 
 const App = () => {
   return (
@@ -18,6 +19,7 @@ const App = () => {
             <Route exact path="/" component={Home} />
             <Route path="/news" component={News} />
             <Route path="/add" component={AddNews} />
+            <Route path="/login" component={Login} />
           </Switch>
         </div>
       </div>

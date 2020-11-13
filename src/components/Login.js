@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import { connect } from "react-redux";
 import Modal from "react-modal";
 import { login } from "../store/actions/usersActions";
+import { Redirect } from "react-router-dom";
 
 const Login = (props) => {
   const [currentUser, setCurrentUser] = useState({
@@ -9,7 +10,11 @@ const Login = (props) => {
     password: "",
   });
 
-  const [close, setClose] = useState(false);
+  const [open, setOpen] = useState(true);
+
+  useEffect(() => {
+    setOpen(true);
+  }, []);
 
   const handleChange = (e) => {
     setCurrentUser({
@@ -19,18 +24,24 @@ const Login = (props) => {
   };
 
   const handleClick = (e) => {
-    setClose(true);
+    setOpen(false);
     props.login(currentUser);
   };
 
-  return (
-    <Modal isOpen={props.show && !close} ariaHideApp={false}>
+  return props.currentUser ? (
+    <Redirect to="/" />
+  ) : (
+    <Modal
+      isOpen={open}
+      ariaHideApp={false}
+      onRequestClose={() => setOpen(false)}
+    >
       <div>
         <form className="ui form">
           <div className="field">
             <label>Login</label>
             <input
-              type="email"
+              type="text"
               name="id"
               placeholder="login"
               onChange={handleChange}
@@ -56,7 +67,9 @@ const Login = (props) => {
 };
 
 const mapStateToProps = (state) => {
-  console.log(state);
+  return {
+    currentUser: state.users.currentUser,
+  };
 };
 
 const mapDispatchToProps = (dispatch) => {

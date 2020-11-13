@@ -1,3 +1,5 @@
+import { v1 as uuidv1 } from "uuid";
+
 export const add = (article) => {
   return (dispatch, getState) => {
     const userId = getState().users.currentUser.id;
@@ -5,10 +7,31 @@ export const add = (article) => {
       type: "ADD_ARTICLE",
       payload: {
         ...article,
-        id: uuid(),
+        id: uuidv1(),
         approved: false,
         userId,
       },
+    });
+  };
+};
+
+export const remove = (article) => {
+  return (dispatch) => {
+    dispatch({
+      type: "REMOVE_ARTICLE",
+      payload: article.id,
+    });
+  };
+};
+
+export const approve = (article) => {
+  return (dispatch, getState) => {
+    const index = getState().news.articles.findIndex(
+      (art) => art.id === article.id
+    );
+    dispatch({
+      type: "APPROVE_ARTICLE",
+      payload: index,
     });
   };
 };

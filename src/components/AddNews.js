@@ -1,7 +1,7 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { connect } from "react-redux";
 import { Redirect } from "react-router-dom";
-import Modal from "react-modal";
+import { add } from "../store/actions/newsActions";
 
 const AddNews = (props) => {
   const [article, setArticle] = useState({
@@ -23,45 +23,44 @@ const AddNews = (props) => {
     e.preventDefault();
     setNews(article);
     props.add(article);
+    return <Redirect to="/news" />;
   };
 
-  // if (news.length != props.news.length) return <Redirect to="/news" />;
+  if (news.length !== props.news.length) return <Redirect to="/news" />;
   return (
-    <Modal isOpen={props.show} ariaHideApp={false}>
-      <div>
-        <form className="ui form">
-          <div className="field">
-            <label>Title</label>
-            <input
-              type="text"
-              name="title"
-              placeholder="Title"
-              onChange={handleChange}
-            />
+    <div>
+      <form className="ui form">
+        <div className="field">
+          <label>Title</label>
+          <input
+            type="text"
+            name="title"
+            placeholder="Title"
+            onChange={handleChange}
+          />
+        </div>
+        <div className="field">
+          <label>Text</label>
+          <textarea
+            name="content"
+            placeholder="Add your text here"
+            cols="30"
+            rows="10"
+            onChange={handleChange}
+          ></textarea>
+        </div>
+        <div className="field">
+          <div className="ui checkbox">
+            <input type="checkbox" tabindex="0" class="hidden" />
+            <label>I agree to the Terms and Conditions</label>
           </div>
-          <div className="field">
-            <label>Text</label>
-            <textarea
-              name="content"
-              placeholder="Add your text here"
-              cols="30"
-              rows="10"
-              onChange={handleChange}
-            ></textarea>
-          </div>
-          <div className="field">
-            <div className="ui checkbox">
-              <input type="checkbox" tabindex="0" class="hidden" />
-              <label>I agree to the Terms and Conditions</label>
-            </div>
-          </div>
+        </div>
 
-          <button className="ui button" type="submit" onClick={handleSubmit}>
-            Submit
-          </button>
-        </form>
-      </div>
-    </Modal>
+        <button className="ui button" type="submit" onClick={handleSubmit}>
+          Submit
+        </button>
+      </form>
+    </div>
   );
 };
 
@@ -74,7 +73,7 @@ const mapStateToProps = (state) => {
 const mapDispatchToProps = (dispatch) => {
   return {
     add: (article) => {
-      dispatch({ type: "ADD", article });
+      dispatch(add(article));
     },
   };
 };

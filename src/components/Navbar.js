@@ -1,37 +1,26 @@
-import React, { useState } from "react";
-import Login from "./Login";
+import React from "react";
 import { connect } from "react-redux";
+import { Link } from "react-router-dom";
 
 const Navbar = (props) => {
-  console.log(props.currentUser);
-  const [show, setShow] = useState(false);
-
   const links = props.currentUser ? (
-    <li onClick={() => props.logOut()}>
-      <a>Выход</a>
-    </li>
+    <li onClick={props.logOut}>Выход</li>
   ) : (
-    <li
-      onClick={(e) => {
-        e.preventDefault();
-        setShow(true);
-      }}
-    >
-      <a href="">Вход</a>
+    <li>
+      <Link to="/login">Вход</Link>
     </li>
   );
   return (
     <div>
       <ul>
         <li>
-          <a href="/">Главная</a>
+          <Link to="/">Главная</Link>
         </li>
         <li>
-          <a href="/news">Новости</a>
+          <Link to="/news">Новости</Link>
         </li>
         {links}
       </ul>
-      <Login show={show} />
     </div>
   );
 };
@@ -53,17 +42,3 @@ const mapDispatchToProps = (dispatch) => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Navbar);
-
-{
-  /* <li
-          onClick={(e) => {
-            e.preventDefault();
-            if (props.currentUser) {
-              props.logOut();
-            }
-            setShow(true);
-          }}
-        >
-          <a href="">Вход/Выход</a>
-        </li> */
-}

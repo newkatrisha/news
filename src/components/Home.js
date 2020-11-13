@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import { connect } from "react-redux";
 import "./Home.css";
-import News from "../components/News";
 
 const Home = (props) => {
   return props.currentUser ? (
     <div>
       <h1>Привет, {props.currentUser.id}!</h1>
-      <News />
     </div>
   ) : (
     <div>

@@ -30,16 +30,30 @@ const initState = {
   ],
 };
 
-const usersReducer = (state = initState, action) => {
+const newsReducer = (state = initState, action) => {
+  console.log(action);
   switch (action.type) {
-    case "ADD":
+    case "ADD_ARTICLE":
       return {
         ...state,
-        articles: [...state.articles, action.article],
+        articles: [...state.articles, action.payload],
+      };
+    case "REMOVE_ARTICLE":
+      return {
+        ...state,
+        articles: state.articles.filter((art) => art.id !== action.payload),
+      };
+    case "APPROVE_ARTICLE":
+      state.articles[action.payload] = {
+        ...state.articles[action.payload],
+        approved: true,
+      };
+      return {
+        ...state,
       };
     default:
       return state;
   }
 };
 
-export default usersReducer;
+export default newsReducer;
